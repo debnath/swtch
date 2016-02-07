@@ -64,7 +64,6 @@ abstract class BaseDAO
                  LIMIT $limit
                  OFFSET $offset
         ");
-            //$stmt->bindParam(':user_id', $user_id);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (\PDOException  $e) {
@@ -72,5 +71,22 @@ abstract class BaseDAO
         }
     }
 
+    public function fullTextSearch($queryString, $fields, $orderby, $offset, $limit = 10)
+    {
+        try {
+            $stmt = $this->connection->prepare("
+                SELECT *
+                 FROM {$this->_tableName}
+                 WHERE MATCH ($fields) AGAINST ('{$queryString}')
+                 ORDER BY $orderby
+                 LIMIT $limit
+                 OFFSET $offset
+        ");
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (\PDOException  $e) {
+            die("Failed to execute query: " . $stmt->query() . " for reasons: " . $e->getMessage());
+        }
+    }
 
 }

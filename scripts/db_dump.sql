@@ -70,4 +70,5 @@ ALTER TABLE `user`
 ADD PRIMARY KEY (`user_id`);
 -- }
 
+
 select * from user limit 100;
