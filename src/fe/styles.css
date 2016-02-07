@@ -1,0 +1,22 @@
+body{
+    background: #f4f4f4;
+}
+
+.tableDivide{
+ border-bottom: 1px dotted #ccc;
+    margin: 5px 0;
+}
+
+.tileWrap {
+    background: #FFF;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 3px 0px 0px rgba(153,153,153,1);
+}
+
+.plainTileWrap {
+    margin-top: 2rem;
+    border: 1px solid #ccc;
+}
