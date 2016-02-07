@@ -1,45 +1,18 @@
 <?php
 
-abstract class API
+abstract class RequestHandler
 {
-    /**
-     * Property: method
-     * The HTTP method this request was made in, either GET, POST, PUT or DELETE
-     */
     protected $method = '';
-    /**
-     * Property: endpoint
-     * The Model requested in the URI. eg: /files
-     */
+
     protected $endpoint = '';
-    /**
-     * Property: verb
-     * An optional additional descriptor about the endpoint, used for things that can
-     * not be handled by the basic methods. eg: /files/process
-     */
+
     protected $verb = '';
-    /**
-     * Property: args
-     * Any additional URI components after the endpoint and verb have been removed, in our
-     * case, an integer ID for the resource. eg: /<endpoint>/<verb>/<arg0>/<arg1>
-     * or /<endpoint>/<arg0>
-     */
+
     protected $args = Array();
-    /**
-     * Property: file
-     * Stores the input of the PUT request
-     */
+
     protected $file = null;
 
-    /**
-     * Constructor: __construct
-     * Allow for CORS, assemble and pre-process the data
-     */
     public function __construct($request) {
-//        header("Access-Control-Allow-Orgin: *");
-//        header("Access-Control-Allow-Methods: *");
-//        header("Content-Type: application/json");
-
         $this->args = explode('/', rtrim($request, '/'));
         $this->endpoint = array_shift($this->args);
         if (array_key_exists(0, $this->args) && !is_numeric($this->args[0])) {
@@ -52,9 +25,6 @@ abstract class API
         switch($this->method) {
             case 'GET':
                 $this->request = $this->_cleanInputs($_GET);
-                echo "DEBUG";
-                error_log("DEBUGGG");
-                //getUserById();
                 break;
             case 'DELETE':
             case 'POST':
@@ -69,7 +39,7 @@ abstract class API
         if (method_exists($this, $this->endpoint)) {
             return $this->_response($this->{$this->endpoint}($this->args));
         }
-        return $this->_response("No Endpoint: $this->endpoint", 404);
+        return $this->_response("Endpoint has not been defined: $this->endpoint", 404);
     }
 
     private function _response($data, $status = 200) {

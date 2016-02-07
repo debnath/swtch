@@ -21,7 +21,7 @@ abstract class BaseDAO
             $this->connection = new PDO(
                 'mysql:host=localhost;dbname=test',
                 'root',
-                ''
+                'root'
             );
             $this->connection->setAttribute(
                 PDO::ATTR_ERRMODE,
