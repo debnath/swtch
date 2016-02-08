@@ -22,6 +22,7 @@ $(document).ready(function() {
         fetchAndRenderKeywordSearch();
     });
 
+
     $( ".form-control" ).keyup(function(e) {
         if (e.keyCode === 13) {
             fetchAndRenderKeywordSearch();
@@ -35,9 +36,22 @@ $(document).ready(function() {
         var length = users.length;
         for (var i = 0; i < length; i++) {
             //@todo do this in a more elegant way
-            var userRow = '<div class="row tableDivide"><div class="col-xs-2">' + users[i]['first_name'] +'</div><div class="col-xs-2">' + users[i]['last_name'] +'</div><div class="col-xs-2">' + users[i]['email'] +'</div><div class="col-xs-2">' + users[i]['role'] +'</div><div class="col-xs-2">' + users[i]['department'] +'</div></div>';
+            var userRow = '<div data-id="' + users[i]['user_id'] + '" class="row tableDivide user-row" onclick="openPopup(this)"><div class="col-xs-2 ">' + users[i]['first_name'] +'</div><div class="col-xs-2">' + users[i]['last_name'] +'</div><div class="col-xs-2">' + users[i]['email'] +'</div><div class="col-xs-2">' + users[i]['role'] +'</div><div class="col-xs-2">' + users[i]['department'] +'</div></div>';
             $( "#userrows" ).append(userRow);
         }
+
+        openPopup = function (e){
+            var self = e;
+            console.log("somethingelse ", self);
+            $('#overlay').addClass("open");
+            var something =  $(self).data("id");
+            console.log("data ", something);
+        };
+
+
+        $(".closeBtn").click(function(e){
+            $('#overlay').removeClass("open");
+        });
     };
 
     renderPagination = function (data) {
