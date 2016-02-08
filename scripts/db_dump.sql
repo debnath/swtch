@@ -70,5 +70,6 @@ ALTER TABLE `user`
 ADD PRIMARY KEY (`user_id`);
 -- }
 
+SELECT *, COUNT(*) FROM user;
 
-select * from user limit 100;
+SELECT COUNT(*) FROM user;

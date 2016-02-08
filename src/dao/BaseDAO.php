@@ -45,7 +45,6 @@ abstract class BaseDAO
                  WHERE $key = '{$value}'
                  LIMIT 1
         ");
-            //$stmt->bindParam(':user_id', $user_id);
             $stmt->execute();
             return $stmt->fetch();
         } catch (\PDOException  $e) {
@@ -71,6 +70,19 @@ abstract class BaseDAO
         }
     }
 
+    public function count()
+    {
+        try {
+            $stmt = $this->connection->prepare("
+                SELECT COUNT(*)
+                 FROM {$this->_tableName}
+        ");
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (\PDOException  $e) {
+            die("Failed to execute query: " . $stmt->query() . " for reasons: " . $e->getMessage());
+        }
+    }
     public function fullTextSearch($queryString, $fields, $orderby, $offset, $limit = 10)
     {
         try {

@@ -14,4 +14,7 @@ echo "\n Testing getUsers() \n ";
 $users = $userModel->getUsers('first_name', 0, 3);
 echo print_r($users, true);
 
+echo "\n Testing getCount() \n ";
+$count = $userModel->getCount();
+echo print_r($count, true);
 ?>

@@ -20,7 +20,9 @@ class Endpoints extends RequestHandler
             $limit = 10;
             $offset = $this->request['offset'] ? $this->request['offset'] : 0;
             $orderby = $this->request['orderby'] ? $this->request['orderby'] : 'user_id';
-            return $userModel->getUsers($orderby, $offset, $limit);
+            $users = $userModel->getUsers($orderby, $offset, $limit);
+            $count = $userModel->getCount();
+            return array('count' => $count[0], 'users' => $users);
         } else {
             return "Invalid method: {$this->method}";
         }

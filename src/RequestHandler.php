@@ -44,6 +44,7 @@ abstract class RequestHandler
 
     private function _response($data, $status = 200) {
         header("HTTP/1.1 " . $status . " " . $this->_requestStatus($status));
+        header('Content-type:application/json;charset=utf-8');
         return json_encode($data);
     }
 
@@ -66,6 +67,6 @@ abstract class RequestHandler
             405 => 'Method Not Allowed',
             500 => 'Internal Server Error',
         );
-        return ($status[$code])?$status[$code]:$status[500];
+        return ($status[$code]) ? $status[$code] : $status[500];
     }
 }
