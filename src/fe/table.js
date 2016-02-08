@@ -36,23 +36,35 @@ $(document).ready(function() {
         var length = users.length;
         for (var i = 0; i < length; i++) {
             //@todo do this in a more elegant way
-            var userRow = '<div data-id="' + users[i]['user_id'] + '" class="row tableDivide user-row" onclick="openPopup(this)"><div class="col-xs-2 ">' + users[i]['first_name'] +'</div><div class="col-xs-2">' + users[i]['last_name'] +'</div><div class="col-xs-2">' + users[i]['email'] +'</div><div class="col-xs-2">' + users[i]['role'] +'</div><div class="col-xs-2">' + users[i]['department'] +'</div></div>';
+            var userRow = '<div data-id="' + users[i]['user_id'] + '" class="row tableDivide user-row userrows" onclick="openPopup(this)"><div class="col-xs-2 ">' + users[i]['first_name'] +'</div><div class="col-xs-2">' + users[i]['last_name'] +'</div><div class="col-xs-2">' + users[i]['email'] +'</div><div class="col-xs-2">' + users[i]['role'] +'</div><div class="col-xs-2">' + users[i]['department'] +'</div></div>';
             $( "#userrows" ).append(userRow);
         }
-
-        openPopup = function (e){
-            var self = e;
-            console.log("somethingelse ", self);
-            $('#overlay').addClass("open");
-            var something =  $(self).data("id");
-            console.log("data ", something);
-        };
-
 
         $(".closeBtn").click(function(e){
             $('#overlay').removeClass("open");
         });
     };
+
+    openPopup = function (context){
+        var self = context;
+        $('#overlay').addClass("open");
+        var id =  $(self).data("id");
+        $.ajax({
+            url: apiHost + '/switchservice/v1/user/' + id,
+            context: document.body
+        }).done(function(data) {
+            renderPopup(data);
+        });
+    };
+
+    renderPopup = function(data) {
+        $('.userContent').empty();
+        $('.userContent').append('<p><b>Name:</b> ' + data["first_name"] + ' ' + data["last_name"] + '</p>');
+        $('.userContent').append('<p><b>Email</b> : ' + data["email"] + '</p>');
+        $('.userContent').append('<p><b>Job:</b> ' + data["role"] + ', ' + data["department"] + '</p>');
+        $('.userContent').append('<p><b>Address:</b> ' + data["street_address_1"] + ', ' + data["suburb"] + ', ' + data["state"]+ ', ' + data["state"]+ ', ' + data["postcode"]+ ', ' + data["country"] + '</p>');
+    };
+
 
     renderPagination = function (data) {
         $( ".pagination" ).empty();
