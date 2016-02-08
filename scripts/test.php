@@ -17,4 +17,8 @@ echo print_r($users, true);
 echo "\n Testing getCount() \n ";
 $count = $userModel->getCount();
 echo print_r($count, true);
+
+echo "\n Testing keywordSearch() \n ";
+$results = $userModel->keywordSearch('Williamson');
+echo print_r($result, true);
 ?>

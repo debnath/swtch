@@ -89,11 +89,12 @@ abstract class BaseDAO
             $stmt = $this->connection->prepare("
                 SELECT *
                  FROM {$this->_tableName}
-                 WHERE MATCH ($fields) AGAINST ('{$queryString}')
-                 ORDER BY $orderby
-                 LIMIT $limit
-                 OFFSET $offset
+                 WHERE MATCH ($fields) AGAINST ('$queryString')
         ");
+            /*
+            ORDER BY $orderby
+                 LIMIT $limit
+                 OFFSET $offset */
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (\PDOException  $e) {

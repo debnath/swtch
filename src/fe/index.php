@@ -21,7 +21,7 @@
             <div class="col-xs-6">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder=" " aria-describedby="basic-addon2">
-                    <span class="input-group-addon" id="basic-addon2">Search</span>
+                    <span class="input-group-addon" id="basic-addon2">Keyword Search</span>
                 </div>
             </div>
         </div>

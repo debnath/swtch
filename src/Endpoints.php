@@ -28,16 +28,13 @@ class Endpoints extends RequestHandler
         }
     }
 
-    /*
-     * Currently not working
-     */
-    protected function search() {
+    protected function wordsearch() {
         if ($this->method === 'GET') {
             $userModel = new \DAO\UserDAO();
-            $offset = $this->request['offset'] ? $this->request['offset'] : 0;
-            $orderby = $this->request['orderby'] ? $this->request['orderby'] : 'user_id';
-            $queryString = $this->request['queryString'] ? $this->request['queryString'] : '';
-            return $userModel->fullTextSearch($queryString, $orderby, $offset);
+            $offset = isset($this->request['offset']) ? $this->request['offset'] : 0;
+            $orderby = isset($this->request['orderby']) ? $this->request['orderby'] : 'user_id';
+            $keyword = isset($this->request['keyword']) ? $this->request['keyword'] : '';
+            return array('users' => $userModel->keywordSearch($keyword, $orderby, $offset));
         } else {
             return "Invalid method: {$this->method}";
         }

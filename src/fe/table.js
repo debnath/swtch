@@ -17,6 +17,18 @@ $(document).ready(function() {
         fetchAndRenderTableData();
     });
 
+    $( ".input-group-addon" ).click(function(e) {
+        e.stopPropagation();
+        fetchAndRenderKeywordSearch();
+    });
+
+    $( ".form-control" ).keyup(function(e) {
+        if (e.keyCode === 13) {
+            fetchAndRenderKeywordSearch();
+        }
+        e.stopPropagation();
+    });
+
     renderTableData = function (data) {
         $( "#userrows" ).empty();
         var users = data.users;
@@ -33,7 +45,6 @@ $(document).ready(function() {
         var count = parseInt(data.count);
         var pageCount = Math.ceil(count / 10);
         for (var i = 1; i <= pageCount; i++) {
-            console.log('adding list item ');
             $( ".pagination" ).append('<li><a href="#" class="pag-item" value=' + i + '>' + i + '</a></li>');
         }
         $('.pag-item').on('click', function(e){
@@ -55,6 +66,14 @@ $(document).ready(function() {
             renderPagination(data);
         });
     };
-
     fetchAndRenderTableData();
+
+    fetchAndRenderKeywordSearch = function() {
+        $.ajax({
+            url: apiHost + '/switchservice/v1/wordsearch?keyword=' + $(".form-control").val(),  //@todo sanitize
+            context: document.body
+        }).done(function(data) {
+            renderTableData(data);
+        });
+    };
 });

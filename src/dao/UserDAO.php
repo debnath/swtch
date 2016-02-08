@@ -19,8 +19,8 @@ class UserDAO extends BaseDAO {
         return $this->count();
     }
 
-    public function fullTextSearch($queryString, $orderby = 'user_id', $offset = 0, $limit = 10) {
-        $fields = "last_name, email, role, department, street_address_2, suburb, state, postcode, country";
-        return $this->fullTextSearch($queryString, $fields, $orderby, $offset, $limit);
+    public function keywordSearch($keyword, $orderby = 'user_id', $offset = 0, $limit = 10) {
+        $fields = "last_name, first_name, email, role, department, street_address_1, suburb, state, country";
+        return $this->fullTextSearch($keyword, $fields, $orderby, $offset, $limit);
     }
 }
