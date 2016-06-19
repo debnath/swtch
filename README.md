@@ -1,4 +1,5 @@
-#Switch Media
+#User data view
+A small side project that takes a generic SQL table of user data and wraps it in a PHP/Apache based REST API which is then rendered on the frontend as a table with sortable options and full text search.
 
 Live example can be viewed here: http://ec2-52-25-86-49.us-west-2.compute.amazonaws.com/index.html
 * By default you will see names sorted by user id
